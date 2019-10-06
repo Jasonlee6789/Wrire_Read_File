@@ -7,13 +7,14 @@ using System.IO;
 using static System.Console;
 
 
+
 namespace SystemIO
 {
     class Program
     {
         static void Main(string[] args)
         {
-            //const int END = 999;
+            const int END = 999;
             //const string DELIM = ",";
 
             const char DELIM = ',';
@@ -36,47 +37,60 @@ namespace SystemIO
             string recordIn;
             string[] fields;
 
+            double minSalary;
+            Write("Enter minimum salary to find or " + END + " to quit >> ");
+            minSalary = Convert.ToDouble(ReadLine());
+            while (minSalary != END)
 
             // Write("Enter employee number or " + END + " to quit >> ");
 
             //upper is to write , below is to read 
-
-            WriteLine("\n{0,-5}{1,-12}{2,8}\n", "Num", "Name", "Salary");
-
-            //emp.EmpNum = Convert.ToInt32(ReadLine());
-
-            // the upper statement is a priming read – an input statement that gets a first data item or record
-
-            recordIn = reader.ReadLine();
-
-           /* while (emp.EmpNum != END)
             {
-                Write("Enter last name >> ");
-                emp.Name = ReadLine();
-                Write("Enter salary >> ");
-                emp.Salary = Convert.ToDouble(ReadLine());
-                writer.WriteLine(emp.EmpNum + DELIM + emp.Name + DELIM + emp.Salary);
-                Write("Enter next employee number or " + END + " to qoit >> ");
-                emp.EmpNum = Convert.ToInt32(ReadLine());
-            }*/
+                WriteLine("\n{0,-5}{1,-12}{2,8}\n", "Num", "Name", "Salary");
 
-            while(recordIn != null)
-            {
-                fields = recordIn.Split(DELIM);
-                emp.EmpNum = Convert.ToInt32(fields[0]);
-                emp.Name = fields[1];
-                emp.Salary = Convert.ToDouble(fields[2]);
-                WriteLine("{0,-5}{1,-12}{2,8}",emp.EmpNum, emp.Name, emp.Salary.ToString("C"));
+    //Reposition the file pointer using the Seek() method and the SeekOrigin enumeration:
+
+                inFile.Seek(0, SeekOrigin.Begin);
+
+                //emp.EmpNum = Convert.ToInt32(ReadLine());
+
+                // the upper statement is a priming read – an input statement that gets a first data item or record
 
                 recordIn = reader.ReadLine();
+
+                /* while (emp.EmpNum != END)
+                 {
+                     Write("Enter last name >> ");
+                     emp.Name = ReadLine();
+                     Write("Enter salary >> ");
+                     emp.Salary = Convert.ToDouble(ReadLine());
+
+                     writer.WriteLine(emp.EmpNum + DELIM + emp.Name + DELIM + emp.Salary);
+                     Write("Enter next employee number or " + END + " to qoit >> ");
+                     emp.EmpNum = Convert.ToInt32(ReadLine());
+                 }*/
+
+                while (recordIn != null)
+                {
+                    fields = recordIn.Split(DELIM);
+                    emp.EmpNum = Convert.ToInt32(fields[0]);
+                    emp.Name = fields[1];
+                    emp.Salary = Convert.ToDouble(fields[2]);
+                    if (emp.Salary >= minSalary)
+                        WriteLine("{0,-5}{1,-12}{2,8}", emp.EmpNum, emp.Name, emp.Salary.ToString("C"));
+                    recordIn = reader.ReadLine();
+                }
+                Write("\nEnter minimum salary to find or " + END + " to quit >> ");
+                minSalary = Convert.ToDouble(ReadLine());
             }
+
             //writer.Close();
             //upper is to write , below is to read 
-            reader.Close();
+            reader.Close(); // Error occurs if
 
             //outFile.Close();
             //upper is to write , below is to read 
-            inFile.Close();
+            inFile.Close(); // these two statements are reversed 
 
 
             // The code provided will print ‘Hello World’ to the console.
